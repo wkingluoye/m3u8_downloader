@@ -13,20 +13,22 @@ from urllib.parse import urlparse
 from Crypto.Cipher import AES
 
 headers = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept": "/",
     "Connection": "Keep-Alive",
-    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
     "Accept-Language": "zh-CN,zh;q=0.9",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+    "Origin": "https://jiexi.modujx01.com/",
+    "Referer": "https://jiexi.modujx01.com/",
 }
 
 ###############################配置信息################################
 # m3u8链接批量输入文件(必须是utf-8编码)
-m3u8InputFilePath = "D:/input/m3u8_input.txt"
+m3u8InputFilePath = "./m3u8_input.txt"
 # 设置视频保存路径
-saveRootDirPath = "D:/output"
+saveRootDirPath = "F:/output"
 # 下载出错的m3u8保存文件
-errorM3u8InfoDirPath = "D:/output/error.txt"
+errorM3u8InfoDirPath = "F:/output/error.txt"
 # m3u8文件、key文件下载尝试次数，ts流默认无限次尝试下载，直到成功
 m3u8TryCountConf = 10
 # 线程数（同时下载的分片数）
@@ -192,6 +194,11 @@ def downloadTs(playlist, index):
         outputFp = open(outputPath, "wb+")
         if playlist[index].startswith("http"):
             tsUrl = playlist[index]
+        elif playlist[index].startswith("/"):
+            # 获取根域名
+            parsed_url = urlparse(rootUrlPath)
+            root_domain = parsed_url.scheme + "://" + parsed_url.netloc
+            tsUrl = root_domain + playlist[index]
         else:
             tsUrl = rootUrlPath + "/" + playlist[index]
         try:

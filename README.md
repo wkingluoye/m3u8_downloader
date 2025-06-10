@@ -10,6 +10,7 @@ m3u8（HLS流）下载，实现了AES解密、合并、多线程、批量下载
 视频名称1|https://www.aaaa.com/bbbb/cccc/index.m3u8
 视频名称2|https://www.xxxx.com/yyyy/zzzz/index.m3u8
 视频名称3|https://www.uuuu.com/vvvv/wwww/index.m3u8
+https://ltdg.cn/playsheng/226156-4-1.html
 ...
 ```
 ## 1.3、根据实际情况修改下载配置
